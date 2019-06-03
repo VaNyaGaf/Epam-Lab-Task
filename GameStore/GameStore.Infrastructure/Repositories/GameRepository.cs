@@ -1,7 +1,7 @@
-﻿using GameStore.DAL.Abstractions.Models;
-using GameStore.DAL.Abstractions.RepositoryInterfaces;
+﻿using GameStore.Core.Interfaces;
+using GameStore.Infrastructure.Models;
 
-namespace GameStore.DAL.Repositories
+namespace GameStore.Infrastructure.Repositories
 {
     class GameRepository : GenericRepository<Game>, IGameRepository
     {

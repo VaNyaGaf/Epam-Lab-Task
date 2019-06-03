@@ -1,8 +1,8 @@
-﻿using GameStore.DAL.Abstractions.Models;
-using GameStore.DAL.Models.FluentApi;
+﻿using GameStore.Infrastructure.Models;
+using GameStore.Infrastructure.ModelsFluentApi;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameStore.DAL
+namespace GameStore.Infrastructure
 {
     public class GameStoreContext : DbContext
     {
@@ -16,7 +16,6 @@ namespace GameStore.DAL
 
         public GameStoreContext(DbContextOptions options) : base(options)
         {
-            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

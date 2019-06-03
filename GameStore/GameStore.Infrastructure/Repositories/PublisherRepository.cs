@@ -1,5 +1,5 @@
-﻿using GameStore.DAL.Abstractions.Models;
-using GameStore.DAL.Abstractions.RepositoryInterfaces;
+﻿using GameStore.Core.Interfaces;
+using GameStore.Infrastructure.Models;
 
 namespace GameStore.Infrastructure.Repositories
 {

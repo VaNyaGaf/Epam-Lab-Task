@@ -1,4 +1,4 @@
-﻿namespace GameStore.DAL.Abstractions.Models
+﻿namespace GameStore.Infrastructure.Models
 {
     public class GameGenres
     {

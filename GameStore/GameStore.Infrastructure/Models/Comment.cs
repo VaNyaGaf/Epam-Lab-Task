@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GameStore.DAL.Abstractions.Models
+namespace GameStore.Infrastructure.Models
 {
     public class Comment
     {

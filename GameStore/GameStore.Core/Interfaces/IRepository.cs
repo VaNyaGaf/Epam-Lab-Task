@@ -10,9 +10,9 @@ namespace GameStore.Core.Interfaces
 
         Task<TEntity> AddAsync(TEntity entity);
 
-        TEntity Update(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
 
-        void Delete(int id);
-        void Delete(TEntity entity);
+        Task DeleteAsync(int id);
+        Task DeleteAsync(TEntity entity);
     }
 }

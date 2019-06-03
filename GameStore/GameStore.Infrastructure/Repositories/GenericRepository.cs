@@ -1,4 +1,4 @@
-﻿using GameStore.DAL.Abstractions.RepositoryInterfaces;
+﻿using GameStore.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,18 +17,20 @@ namespace GameStore.Infrastructure.Repositories
         public async Task<TEntity> AddAsync(TEntity entity)
         {
             var res = await _context.Set<TEntity>().AddAsync(entity);
+            await _context.SaveChangesAsync();
             return res.Entity;
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var entityToDelete = _context.Set<TEntity>().Find(id);
-            Delete(entityToDelete);
+            var entityToDelete = await GetByIdAsync(id);
+            await DeleteAsync(entityToDelete);
         }
 
-        public void Delete(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()
@@ -41,9 +43,10 @@ namespace GameStore.Infrastructure.Repositories
             return await _context.Set<TEntity>().FindAsync(id);
         }
 
-        public TEntity Update(TEntity entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return entity;
         }
     }

@@ -1,14 +1,15 @@
-﻿using GameStore.BusinessLogic.Abstractions.DtoModels;
+﻿using GameStore.Core.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace GameStore.BusinessLogic.Abstractions.ServiceInterfaces
+namespace GameStore.Core.ServiceInterfaces
 {
     public interface IPublisherService
     {
-        PublisherDto CreateAsync(PublisherDto enitity);
-        PublisherDto UpdateAsync(PublisherDto entity);
-        IList<PublisherDto> GetAllAsync();
-        PublisherDto GetByIdAsync(int id);
-        void RemoveAsync(int id);
+        Task<Publisher> CreateAsync(Publisher enitity);
+        Task<Publisher> UpdateAsync(Publisher entity);
+        Task<IReadOnlyCollection<Publisher>> GetAllAsync();
+        Task<Publisher> GetByIdAsync(int id);
+        Task RemoveAsync(int id);
     }
 }

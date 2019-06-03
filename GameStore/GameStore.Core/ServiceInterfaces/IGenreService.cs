@@ -1,14 +1,15 @@
-﻿using GameStore.BusinessLogic.Abstractions.DtoModels;
+﻿using GameStore.Core.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace GameStore.BusinessLogic.Abstractions.ServiceInterfaces
+namespace GameStore.Core.ServiceInterfaces
 {
     public interface IGenreService
     {
-        GenreDto CreateAsync(GenreDto enitity);
-        GenreDto UpdateAsync(GenreDto entity);
-        IList<GenreDto> GetAllAsync();
-        GenreDto GetByIdAsync(int id);
-        void RemoveAsync(int id);
+        Task<Genre> CreateAsync(Genre enitity);
+        Task<Genre> UpdateAsync(Genre entity);
+        Task<IReadOnlyCollection<Genre>> GetAllAsync();
+        Task<Genre> GetByIdAsync(int id);
+        Task RemoveAsync(int id);
     }
 }
