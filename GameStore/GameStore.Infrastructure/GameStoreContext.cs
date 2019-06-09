@@ -1,4 +1,4 @@
-﻿using GameStore.Infrastructure.Models;
+﻿using GameStore.Core.Entities;
 using GameStore.Infrastructure.ModelsFluentApi;
 using Microsoft.EntityFrameworkCore;
 

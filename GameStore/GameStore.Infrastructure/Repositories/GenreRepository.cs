@@ -1,5 +1,5 @@
-﻿using GameStore.Core.Interfaces;
-using GameStore.Infrastructure.Models;
+﻿using GameStore.Core.Entities;
+using GameStore.Core.Interfaces;
 
 namespace GameStore.Infrastructure.Repositories
 {

@@ -1,4 +1,4 @@
-﻿namespace GameStore.Infrastructure.Models
+﻿namespace GameStore.Core.Entities
 {
     public class GamePlatformTypes
     {

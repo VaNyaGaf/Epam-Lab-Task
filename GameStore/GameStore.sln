@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28917.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.PL", "GameStore.PL\GameStore.PL.csproj", "{8DEA41B4-52EC-4BB3-9193-6651F9D3258C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.PL", "GameStore.PL\GameStore.PL.csproj", "{8DEA41B4-52EC-4BB3-9193-6651F9D3258C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Core", "GameStore.Core\GameStore.Core.csproj", "{300D925E-BDD7-4AB0-9FEC-45DA5B6ECA98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Core", "GameStore.Core\GameStore.Core.csproj", "{300D925E-BDD7-4AB0-9FEC-45DA5B6ECA98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Infrastructure", "GameStore.Infrastructure\GameStore.Infrastructure.csproj", "{99C843C3-B8FD-4153-8005-9296A6F73CEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Infrastructure", "GameStore.Infrastructure\GameStore.Infrastructure.csproj", "{99C843C3-B8FD-4153-8005-9296A6F73CEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
