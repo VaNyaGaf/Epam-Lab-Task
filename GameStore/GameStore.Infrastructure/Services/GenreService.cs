@@ -1,11 +1,12 @@
 ﻿using GameStore.Core.Entities;
 using GameStore.Core.Interfaces;
+using GameStore.Core.ServiceInterfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GameStore.Infrastructure.Services
 {
-    public class GenreService
+    public class GenreService : IGenreService
     {
         private readonly IGenreRepository _genreRepository;
 
