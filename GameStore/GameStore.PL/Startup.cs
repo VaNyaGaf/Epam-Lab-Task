@@ -27,6 +27,7 @@ namespace GameStore.PL
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegisterDependecies(Configuration.GetConnectionString("AppDB"));
+            services.AddHostedService<DbInitializer>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
