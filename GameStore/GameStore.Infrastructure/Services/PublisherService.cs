@@ -4,7 +4,7 @@ using GameStore.Core.ServiceInterfaces;
 
 namespace GameStore.Infrastructure.Services
 {
-    public class PublisherService : CrudService<Publisher, IPublisherRepository>, IPublisherService
+    public class PublisherService : CrudService<Publisher>, IPublisherService
     {
         private readonly IPublisherRepository _publisherRepository;
 

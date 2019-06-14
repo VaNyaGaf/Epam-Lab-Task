@@ -4,7 +4,7 @@ using GameStore.Core.ServiceInterfaces;
 
 namespace GameStore.Infrastructure.Services
 {
-    public class GameService : CrudService<Game, IGameRepository>, IGameService
+    public class GameService : CrudService<Game>, IGameService
     {
         private readonly IGameRepository _gameRepository;
 

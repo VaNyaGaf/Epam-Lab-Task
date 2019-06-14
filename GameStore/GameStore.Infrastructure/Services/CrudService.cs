@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GameStore.Infrastructure.Services
 {
-    public class CrudService<TEntity, TService> : ICrudService<TEntity> where TEntity : class where TService : IRepository<TEntity>
+    public class CrudService<TEntity> : ICrudService<TEntity> where TEntity : class
     {
         private readonly IRepository<TEntity> _repository;
 
