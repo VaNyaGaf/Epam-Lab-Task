@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using GameStore.Infrastructure;
+using GameStore.PL.Filters;
 
 namespace GameStore.PL
 {
@@ -28,7 +29,11 @@ namespace GameStore.PL
         {
             services.RegisterDependecies(Configuration.GetConnectionString("AppDB"));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(LogIpResourceFilter));
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
