@@ -1,6 +1,9 @@
-﻿using GameStore.Core.Entities;
+﻿using AutoMapper;
+using GameStore.Core.Entities;
 using GameStore.Core.ServiceInterfaces;
+using GameStore.PL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -11,22 +14,40 @@ namespace GameStore.PL.Controllers
     public class PublisherController : ControllerBase
     {
         private readonly IPublisherService _publisherService;
+        private readonly IMapper _mapper;
+        private readonly ILogger<PublisherController> _logger;
 
-        public PublisherController(IPublisherService genreService)
+        public PublisherController(IPublisherService genreService, IMapper mapper, ILogger<PublisherController> logger)
         {
             _publisherService = genreService ?? throw new ApplicationException("Publisher Service isn't injected!");
+            _mapper = mapper ?? throw new ApplicationException("AutoMapper isn't injected");
+            _logger = logger ?? throw new ApplicationException("Logger isn't injected");
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePublisher(Publisher publisher)
+        public async Task<IActionResult> CreatePublisher(CreatePublisherViewModel publisherViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Model state is not valid");
+                throw new ApplicationException("Model state is not valid");
+            }
+
+            var publisher = _mapper.Map<Publisher>(publisherViewModel);
             return Ok(await _publisherService.CreateAsync(publisher));
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePublisher(Publisher publisher)
+        public async Task<IActionResult> UpdatePublisher(EditPublisherModel publisher)
         {
-            return Ok(await _publisherService.UpdateAsync(publisher));
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Model state is not valid");
+                throw new ApplicationException("Model state is not valid");
+            }
+
+            var editedPublisher = _mapper.Map<Publisher>(publisher);
+            return Ok(await _publisherService.UpdateAsync(editedPublisher));
         }
 
         [HttpGet("{id}")]

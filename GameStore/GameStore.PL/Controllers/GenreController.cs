@@ -1,6 +1,9 @@
-﻿using GameStore.Core.Entities;
+﻿using AutoMapper;
+using GameStore.Core.Entities;
 using GameStore.Core.ServiceInterfaces;
+using GameStore.PL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -11,22 +14,40 @@ namespace GameStore.PL.Controllers
     public class GenreController : ControllerBase
     {
         private readonly IGenreService _genreService;
+        private readonly IMapper _mapper;
+        private readonly ILogger<GenreController> _logger;
 
-        public GenreController(IGenreService genreService)
+        public GenreController(IGenreService genreService, IMapper mapper, ILogger<GenreController> logger)
         {
             _genreService = genreService ?? throw new ApplicationException("Genre Service isn't injected!");
+            _mapper = mapper ?? throw new ApplicationException("AutoMapper isn't injected");
+            _logger = logger ?? throw new ApplicationException("Logger isn't injected");
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGenre(Genre genre)
+        public async Task<IActionResult> CreateGenre(CreateGameViewModel genreViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Model state is not valid");
+                throw new ApplicationException("Model state is not valid");
+            }
+
+            var genre = _mapper.Map<Genre>(genreViewModel);
             return Ok(await _genreService.CreateAsync(genre));
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateGenre(Genre genre)
+        public async Task<IActionResult> UpdateGenre(EditGenreModel genre)
         {
-            return Ok(await _genreService.UpdateAsync(genre));
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Model state is not valid");
+                throw new ApplicationException("Model state is not valid");
+            }
+
+            var editedGenre = _mapper.Map<Genre>(genre);
+            return Ok(await _genreService.UpdateAsync(editedGenre));
         }
 
         [HttpGet("{id}")]

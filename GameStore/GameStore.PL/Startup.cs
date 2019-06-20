@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using GameStore.Infrastructure;
 using GameStore.PL.Filters;
+using AutoMapper;
+using System.Reflection;
 
 namespace GameStore.PL
 {
@@ -30,6 +32,7 @@ namespace GameStore.PL
             services.RegisterDependecies(Configuration.GetConnectionString("AppDB"));
             services.AddHostedService<DbInitializer>();
 
+            services.AddAutoMapper(typeof(Program).Assembly);
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(LogIpResourceFilter));
