@@ -8,7 +8,7 @@ namespace GameStore.Infrastructure.ModelsFluentApi
     {
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
-            builder.HasAlternateKey(g => g.Name);
+            builder.HasIndex(g => g.Name).IsUnique();
             builder.Property(g => g.Name).IsRequired();
         }
     }
