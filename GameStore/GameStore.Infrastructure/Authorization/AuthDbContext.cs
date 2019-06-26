@@ -8,7 +8,7 @@ namespace GameStore.Infrastructure.Authorization
     {
         public DbSet<AuthUser> AuthUser { get; set; }
 
-        public AuthDbContext(DbContextOptions options) : base(options)
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         { }
     }
 }

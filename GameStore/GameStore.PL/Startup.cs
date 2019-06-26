@@ -18,6 +18,9 @@ using GameStore.Infrastructure.Authorization.Models;
 using Microsoft.AspNetCore.Identity;
 using GameStore.Infrastructure.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace GameStore.PL
 {
@@ -35,8 +38,37 @@ namespace GameStore.PL
         {
             services.RegisterDependecies(Configuration.GetConnectionString("AppDB"), Configuration.GetConnectionString("AuthDB"));
             services.AddHostedService<DbInitializer>();
-            services.AddIdentity<AuthUser, IdentityRole>()
+            services.AddIdentity<AuthUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredUniqueChars = 0;
+            })
                 .AddEntityFrameworkStores<AuthDbContext>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"]))
+                    };
+                });
 
             services.AddAutoMapper(typeof(Program).Assembly);
             services.AddMvc(options =>
@@ -59,6 +91,7 @@ namespace GameStore.PL
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

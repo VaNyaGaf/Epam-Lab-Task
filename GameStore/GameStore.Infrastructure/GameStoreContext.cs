@@ -14,7 +14,7 @@ namespace GameStore.Infrastructure
         public DbSet<Genre> Genres { get; set; }
         public DbSet<PlatformType> PlatformTypes { get; set; }
 
-        public GameStoreContext(DbContextOptions options) : base(options)
+        public GameStoreContext(DbContextOptions<GameStoreContext> options) : base(options)
         {
         }
 
