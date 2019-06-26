@@ -14,6 +14,10 @@ using GameStore.Infrastructure;
 using GameStore.PL.Filters;
 using AutoMapper;
 using System.Reflection;
+using GameStore.Infrastructure.Authorization.Models;
+using Microsoft.AspNetCore.Identity;
+using GameStore.Infrastructure.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.PL
 {
@@ -29,8 +33,10 @@ namespace GameStore.PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.RegisterDependecies(Configuration.GetConnectionString("AppDB"));
+            services.RegisterDependecies(Configuration.GetConnectionString("AppDB"), Configuration.GetConnectionString("AuthDB"));
             services.AddHostedService<DbInitializer>();
+            services.AddIdentity<AuthUser, IdentityRole>()
+                .AddEntityFrameworkStores<AuthDbContext>();
 
             services.AddAutoMapper(typeof(Program).Assembly);
             services.AddMvc(options =>
