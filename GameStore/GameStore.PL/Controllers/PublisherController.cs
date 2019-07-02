@@ -19,20 +19,14 @@ namespace GameStore.PL.Controllers
 
         public PublisherController(IPublisherService genreService, IMapper mapper, ILogger<PublisherController> logger)
         {
-            _publisherService = genreService ?? throw new ApplicationException("Publisher Service isn't injected!");
-            _mapper = mapper ?? throw new ApplicationException("AutoMapper isn't injected");
-            _logger = logger ?? throw new ApplicationException("Logger isn't injected");
+            _publisherService = genreService;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePublisher(CreatePublisherViewModel publisherViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model state is not valid");
-                throw new ApplicationException("Model state is not valid");
-            }
-
             var publisher = _mapper.Map<Publisher>(publisherViewModel);
             return Ok(await _publisherService.CreateAsync(publisher));
         }
@@ -40,12 +34,6 @@ namespace GameStore.PL.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePublisher(EditPublisherModel publisher)
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model state is not valid");
-                throw new ApplicationException("Model state is not valid");
-            }
-
             var editedPublisher = _mapper.Map<Publisher>(publisher);
             return Ok(await _publisherService.UpdateAsync(editedPublisher));
         }

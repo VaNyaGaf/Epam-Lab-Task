@@ -19,20 +19,14 @@ namespace GameStore.PL.Controllers
 
         public GameController(IGameService gameService, IMapper mapper, ILogger<GameController> logger)
         {
-            _gameService = gameService ?? throw new ApplicationException("Game Service isn't injected!");
-            _mapper = mapper ?? throw new ApplicationException("AutoMapper isn't injected");
-            _logger = logger ?? throw new ApplicationException("Logger isn't injected");
+            _gameService = gameService;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateGame(CreateGameViewModel gameViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model state is not valid");
-                throw new ApplicationException("Model state is not valid");
-            }
-
             var game = _mapper.Map<Game>(gameViewModel);
             return Ok(await _gameService.CreateAsync(game));
         }
@@ -40,12 +34,6 @@ namespace GameStore.PL.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateGame(EditGameModel game)
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model state is not valid");
-                throw new ApplicationException("Model state is not valid");
-            }
-
             var editedGame = _mapper.Map<Game>(game);
             return Ok(await _gameService.UpdateAsync(editedGame));
         }
