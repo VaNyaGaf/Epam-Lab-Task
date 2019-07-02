@@ -6,6 +6,9 @@ namespace GameStore.Infrastructure.Authorization.Models
     {
         public string UserLastName { get; set; }
 
+        public AuthUser()
+        { }
+
         public AuthUser(string userName, string userLastName)
         {
             UserName = userName;

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using GameStore.Infrastructure.Authorization.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +10,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GameStore.PL.Controllers
 {
@@ -15,24 +19,44 @@ namespace GameStore.PL.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly UserManager<AuthUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, UserManager<AuthUser> userManager, IMapper mapper)
         {
             _configuration = configuration;
+            _userManager = userManager;
+            _mapper = mapper;
+        }
+
+        [HttpPost("sign-up")]
+        public async Task<IActionResult> SignUp(SignUpModel signUpModel)
+        {
+            AuthUser user = _mapper.Map<AuthUser>(signUpModel);
+            IdentityResult result = await _userManager.CreateAsync(user, signUpModel.Password);
+
+            if (result.Succeeded)
+            {
+                string token = GenerateToken();
+                return Ok(new { token, user });
+            }
+
+            return BadRequest();
         }
 
         [HttpPost("sign-in")]
-        public IActionResult SignIn()
+        public async Task<IActionResult> SignIn(SignInModel signInModel)
         {
-            string token = GenerateToken();
-            return Ok(new { token });
-        }
+            AuthUser user = await _userManager.FindByEmailAsync(signInModel.Email);
+            var result = await _userManager.CheckPasswordAsync(user, signInModel.Password);
 
-        [HttpPost("sign-up"), Authorize]
-        public IActionResult SignUp()
-        {
-            string token = GenerateToken();
-            return Ok(new { token });
+            if (result)
+            {
+                string token = GenerateToken();
+                return Ok(new { token, user });
+            }
+
+            return BadRequest();
         }
 
         private string GenerateToken()
