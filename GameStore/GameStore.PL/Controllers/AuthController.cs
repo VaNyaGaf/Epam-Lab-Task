@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GameStore.Infrastructure.Authorization.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -37,7 +36,7 @@ namespace GameStore.PL.Controllers
 
             if (result.Succeeded)
             {
-                string token = GenerateToken();
+                string token = await GenerateToken(user);
                 return Ok(new { token, user });
             }
 
@@ -52,14 +51,14 @@ namespace GameStore.PL.Controllers
 
             if (result)
             {
-                string token = GenerateToken();
+                string token = await GenerateToken(user);
                 return Ok(new { token, user });
             }
 
             return BadRequest();
         }
 
-        private string GenerateToken()
+        private async Task<string> GenerateToken(AuthUser user)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -67,13 +66,24 @@ namespace GameStore.PL.Controllers
             var tokeOptions = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
-                claims: new List<Claim>(),
+                claims: await GetUserRoles(user),
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: signinCredentials
             );
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
             return tokenString;
+        }
+
+        private async Task<List<Claim>> GetUserRoles(AuthUser user)
+        {
+            var userRoles = await _userManager.GetRolesAsync(user);
+            List<Claim> userClaims = new List<Claim>();
+            foreach (var r in userRoles)
+            {
+                userClaims.Add(new Claim(ClaimTypes.Role, r));
+            }
+            return userClaims;
         }
     }
 }
