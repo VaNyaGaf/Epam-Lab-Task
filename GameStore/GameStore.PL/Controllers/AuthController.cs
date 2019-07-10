@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using GameStore.Infrastructure.Authorization.Models;
+using GameStore.PL.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GameStore.PL.Controllers
@@ -20,12 +17,14 @@ namespace GameStore.PL.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<AuthUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly ITokenGenerator _tokenGenerator;
 
-        public AuthController(IConfiguration configuration, UserManager<AuthUser> userManager, IMapper mapper)
+        public AuthController(IConfiguration configuration, UserManager<AuthUser> userManager, IMapper mapper, ITokenGenerator tokenGenerator)
         {
             _configuration = configuration;
             _userManager = userManager;
             _mapper = mapper;
+            _tokenGenerator = tokenGenerator;
         }
 
         [HttpPost("sign-up")]
@@ -36,7 +35,7 @@ namespace GameStore.PL.Controllers
 
             if (result.Succeeded)
             {
-                string token = await GenerateToken(user);
+                string token = _tokenGenerator.GetToken(await GetUserRoles(user));
                 return Ok(new { token, user });
             }
 
@@ -51,28 +50,11 @@ namespace GameStore.PL.Controllers
 
             if (result)
             {
-                string token = await GenerateToken(user);
+                string token = _tokenGenerator.GetToken(await GetUserRoles(user));
                 return Ok(new { token, user });
             }
 
             return BadRequest();
-        }
-
-        private async Task<string> GenerateToken(AuthUser user)
-        {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
-            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-            var tokeOptions = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: await GetUserRoles(user),
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: signinCredentials
-            );
-
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-            return tokenString;
         }
 
         private async Task<List<Claim>> GetUserRoles(AuthUser user)

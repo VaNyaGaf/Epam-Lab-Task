@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using GameStore.PL.Tokens;
 
 namespace GameStore.PL
 {
@@ -37,6 +38,7 @@ namespace GameStore.PL
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegisterDependecies(Configuration.GetConnectionString("AppDB"), Configuration.GetConnectionString("AuthDB"));
+            services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddHostedService<DbInitializer>();
             services.AddIdentity<AuthUser, IdentityRole>(options =>
             {
