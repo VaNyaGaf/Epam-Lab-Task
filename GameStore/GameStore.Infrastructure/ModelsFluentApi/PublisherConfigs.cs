@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GameStore.Infrastructure.ModelsFluentApi
 {
-    class PublisherConfigs : IEntityTypeConfiguration<Publisher>
+    internal class PublisherConfigs : IEntityTypeConfiguration<Publisher>
     {
         public void Configure(EntityTypeBuilder<Publisher> builder)
         {

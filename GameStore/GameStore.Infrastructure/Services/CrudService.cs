@@ -1,11 +1,12 @@
-﻿using GameStore.Core.Interfaces;
-using GameStore.Core.ServiceInterfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using GameStore.Core.Interfaces;
+using GameStore.Core.ServiceInterfaces;
 
 namespace GameStore.Infrastructure.Services
 {
-    public class CrudService<TEntity> : ICrudService<TEntity> where TEntity : class
+    public class CrudService<TEntity> : ICrudService<TEntity> 
+        where TEntity : class
     {
         private readonly IRepository<TEntity> _repository;
 

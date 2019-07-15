@@ -8,7 +8,8 @@ namespace GameStore.Infrastructure.Services
     {
         private readonly IGameRepository _gameRepository;
 
-        public GameService(IGameRepository gameRepository) : base(gameRepository)
+        public GameService(IGameRepository gameRepository) 
+            : base(gameRepository)
         {
             _gameRepository = gameRepository;
         }

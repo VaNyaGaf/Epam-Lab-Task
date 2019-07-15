@@ -1,10 +1,10 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using FluentAssertions;
 using GameStore.Core.Entities;
 using GameStore.Core.Interfaces;
 using GameStore.Infrastructure.Services;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace GameStore.Tests
@@ -41,7 +41,7 @@ namespace GameStore.Tests
             var expected = GetGame();
             var actual = await service.GetByIdAsync(1);
 
-            //Assert.True(expected.Equals(actual));     //  Why this don't work???
+            // Assert.True(expected.Equals(actual));     //  Why this don't work???
             expected.Should().BeEquivalentTo(actual);
         }
 
@@ -50,7 +50,7 @@ namespace GameStore.Tests
             return new List<Game>
             {
                 new Game() { Id = 1, Name = "CS:GO" },
-                new Game() { Id = 2, Name = "Dota2"}
+                new Game() { Id = 2, Name = "Dota2" }
             };
         }
 

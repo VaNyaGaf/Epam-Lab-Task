@@ -6,18 +6,25 @@ namespace GameStore.Infrastructure
 {
     public class GameStoreContext : DbContext
     {
-        public DbSet<Publisher> Publishers { get; set; }
-        public DbSet<Game> Games { get; set; }
-        public DbSet<GamePlatformTypes> GamePlatformTypes { get; set; }
-        public DbSet<GameGenres> GameGenres { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Genre> Genres { get; set; }
-        public DbSet<PlatformType> PlatformTypes { get; set; }
-
-        public GameStoreContext(DbContextOptions<GameStoreContext> options) : base(options)
+        public GameStoreContext(DbContextOptions<GameStoreContext> options) 
+            : base(options)
         {
         }
 
+        public DbSet<Publisher> Publishers { get; set; }
+
+        public DbSet<Game> Games { get; set; }
+
+        public DbSet<GamePlatformTypes> GamePlatformTypes { get; set; }
+
+        public DbSet<GameGenres> GameGenres { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Genre> Genres { get; set; }
+
+        public DbSet<PlatformType> PlatformTypes { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new GenreConfigs());

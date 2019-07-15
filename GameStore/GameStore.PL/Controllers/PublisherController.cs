@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using GameStore.Core.Entities;
 using GameStore.Core.ServiceInterfaces;
 using GameStore.PL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace GameStore.PL.Controllers
 {

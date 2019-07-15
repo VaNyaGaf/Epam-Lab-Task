@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GameStore.Infrastructure.ModelsFluentApi
 {
-    class PlatformTypeConfigs : IEntityTypeConfiguration<PlatformType>
+    internal class PlatformTypeConfigs : IEntityTypeConfiguration<PlatformType>
     {
         public void Configure(EntityTypeBuilder<PlatformType> builder)
         {

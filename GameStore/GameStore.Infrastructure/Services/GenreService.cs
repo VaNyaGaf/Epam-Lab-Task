@@ -8,7 +8,8 @@ namespace GameStore.Infrastructure.Services
     {
         private readonly IGenreRepository _genreRepository;
 
-        public GenreService(IGenreRepository genreRepository) : base(genreRepository)
+        public GenreService(IGenreRepository genreRepository) 
+            : base(genreRepository)
         {
             _genreRepository = genreRepository;
         }

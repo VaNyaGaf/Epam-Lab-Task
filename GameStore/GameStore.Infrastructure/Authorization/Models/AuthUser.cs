@@ -4,10 +4,9 @@ namespace GameStore.Infrastructure.Authorization.Models
 {
     public class AuthUser : IdentityUser
     {
-        public string UserLastName { get; set; }
-
         public AuthUser()
-        { }
+        {
+        }
 
         public AuthUser(string userName, string userLastName)
         {
@@ -21,5 +20,7 @@ namespace GameStore.Infrastructure.Authorization.Models
             UserLastName = userLastName;
             Email = email;
         }
+
+        public string UserLastName { get; set; }
     }
 }

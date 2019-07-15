@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace GameStore.PL.Filters
 {

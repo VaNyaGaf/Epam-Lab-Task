@@ -1,0 +1,16 @@
+<Project>
+
+	<PropertyGroup>
+		<!-- Common ruleset shared by all projects -->
+		<CodeAnalysisRuleset>$(MSBuildThisFileDirectory)CC_RuleSet.ruleset</CodeAnalysisRuleset>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TreatWarningsAsErrors>False</TreatWarningsAsErrors> 
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+	</ItemGroup>
+
+</Project>

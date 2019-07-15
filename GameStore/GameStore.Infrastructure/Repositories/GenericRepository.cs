@@ -1,11 +1,12 @@
-﻿using GameStore.Core.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using GameStore.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.Infrastructure.Repositories
 {
-    class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    internal class GenericRepository<TEntity> : IRepository<TEntity> 
+        where TEntity : class
     {
         private readonly GameStoreContext _context;
 

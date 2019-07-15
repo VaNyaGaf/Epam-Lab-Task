@@ -6,6 +6,7 @@ namespace GameStore.PL.ViewModels
     {
         [Required]
         public string Name { get; set; }
+
         public int ParentGenreId { get; set; }
     }
 }

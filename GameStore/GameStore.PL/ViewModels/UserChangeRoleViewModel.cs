@@ -7,6 +7,7 @@ namespace GameStore.PL.ViewModels
     {
         [Required]
         public string UserId { get; set; }
+
         public IList<string> Roles { get; set; }
     }
 }

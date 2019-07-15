@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using AutoMapper;
 using GameStore.Infrastructure.Authorization.Models;
 using GameStore.PL.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace GameStore.PL.Controllers
 {
@@ -65,6 +65,7 @@ namespace GameStore.PL.Controllers
             {
                 userClaims.Add(new Claim(ClaimTypes.Role, r));
             }
+
             return userClaims;
         }
     }

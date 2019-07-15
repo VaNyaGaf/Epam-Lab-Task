@@ -3,9 +3,11 @@ using GameStore.Core.Interfaces;
 
 namespace GameStore.Infrastructure.Repositories
 {
-    class GenreRepository : GenericRepository<Genre>, IGenreRepository
+    internal class GenreRepository : GenericRepository<Genre>, IGenreRepository
     {
-        public GenreRepository(GameStoreContext context) : base(context)
-        { }
+        public GenreRepository(GameStoreContext context) 
+            : base(context)
+        {
+        }
     }
 }

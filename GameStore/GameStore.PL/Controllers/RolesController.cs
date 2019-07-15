@@ -1,11 +1,11 @@
-﻿using GameStore.Infrastructure.Authorization.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using GameStore.Infrastructure.Authorization.Models;
 using GameStore.PL.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GameStore.PL.Controllers
 {
@@ -39,7 +39,9 @@ namespace GameStore.PL.Controllers
             var result = await _roleManager.CreateAsync(new IdentityRole(roleName));
 
             if (result.Succeeded)
+            {
                 return Ok();
+            }
 
             return BadRequest();
         }
@@ -74,7 +76,9 @@ namespace GameStore.PL.Controllers
                 var result = await _userManager.RemoveFromRolesAsync(user, userChangeRole.Roles);
 
                 if (result.Succeeded)
+                {
                     return Ok();
+                }
             }
 
             return BadRequest();
