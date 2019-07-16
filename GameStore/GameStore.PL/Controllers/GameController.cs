@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GameStore.Core.Entities;
 using GameStore.Core.ServiceInterfaces;
+using GameStore.PL.Pagination;
 using GameStore.PL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -50,11 +51,26 @@ namespace GameStore.PL.Controllers
             return Ok(await _gameService.GetAllAsync());
         }
 
+        [HttpGet("Pages")]
+        public async Task<IActionResult> GetPageOfGames(int pageSize, int pageNumber)
+        {
+            int skip = (pageNumber - 1) * pageSize;
+            int lastPage = GetLastPage((await _gameService.GetAllAsync()).Count, pageSize);
+            var games = await _gameService.GetGamesAsync(skip, pageSize);
+            Paginator<Game> paginator = new Paginator<Game>(games, pageSize, pageNumber, lastPage);
+            return Ok(new { page = paginator.GetPage() });
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _gameService.DeleteAsync(id);
             return Ok();
+        }
+
+        private int GetLastPage(int totalItem, int pageSize)
+        {
+            return (int)Math.Ceiling((decimal)totalItem / pageSize);
         }
     }
 }
