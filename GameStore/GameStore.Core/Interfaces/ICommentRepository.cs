@@ -1,8 +1,11 @@
-﻿using GameStore.Core.Entities;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using GameStore.Core.Entities;
 
 namespace GameStore.Core.Interfaces
 {
     public interface ICommentRepository : IRepository<Comment>
     {
+        Task<IReadOnlyCollection<Comment>> GetGameCommentsAsync(int gameId);
     }
 }

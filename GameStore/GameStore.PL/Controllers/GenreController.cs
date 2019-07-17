@@ -56,5 +56,12 @@ namespace GameStore.PL.Controllers
             await _genreService.DeleteAsync(id);
             return Ok();
         }
+
+        [HttpGet("Games/{gameId}/Genres")]
+        public async Task<IActionResult> GetGameGenres(int gameId)
+        {
+            var res = await _genreService.GetGameGenresAsync(gameId);
+            return Ok(res);
+        }
     }
 }

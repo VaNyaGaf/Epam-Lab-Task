@@ -13,6 +13,13 @@ namespace GameStore.Infrastructure.Repositories
         public GameRepository(GameStoreContext context)
             : base(context)
         {
-        }       
+        }
+
+        public async Task<IReadOnlyCollection<Game>> GetPublisherGamesAsync(int publisherId)
+        {
+            return await (from game in Context.Games
+                    where game.PublisherId == publisherId
+                    select game).ToListAsync();
+        }
     }
 }

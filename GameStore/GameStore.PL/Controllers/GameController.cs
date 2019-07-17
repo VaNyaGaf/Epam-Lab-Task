@@ -64,5 +64,11 @@ namespace GameStore.PL.Controllers
             await _gameService.DeleteAsync(id);
             return Ok();
         }
+
+        [HttpGet("Publishers/{publisherId}/Games")]
+        public async Task<IActionResult> GetPublisherGames(int publisherId)
+        {
+            return Ok(await _gameService.GetPublisherGamesAsync(publisherId));
+        }
     }
 }

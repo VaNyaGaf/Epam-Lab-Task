@@ -17,6 +17,11 @@ namespace GameStore.Infrastructure.Repositories
             _context = context;
         }
 
+        protected GameStoreContext Context
+        {
+            get => _context;
+        }
+
         public async Task<TEntity> AddAsync(TEntity entity)
         {
             var res = await _context.Set<TEntity>().AddAsync(entity);

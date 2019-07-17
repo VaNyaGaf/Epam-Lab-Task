@@ -27,5 +27,10 @@ namespace GameStore.Infrastructure.Services
         {
             return await _gameRepository.GetItemsAsync(skip, amount);
         }
+
+        public async Task<IReadOnlyCollection<Game>> GetPublisherGamesAsync(int publisherId)
+        {
+            return await _gameRepository.GetPublisherGamesAsync(publisherId);
+        }
     }
 }

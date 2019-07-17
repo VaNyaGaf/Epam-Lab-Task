@@ -24,6 +24,7 @@ namespace GameStore.Infrastructure
             servcies.AddTransient<IGameService, GameService>();
             servcies.AddTransient<IGenreService, GenreService>();
             servcies.AddTransient<IPublisherService, PublisherService>();
+            servcies.AddTransient<ICommentService, CommentService>();
         }
     }
 }

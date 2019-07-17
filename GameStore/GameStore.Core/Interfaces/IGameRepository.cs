@@ -6,5 +6,6 @@ namespace GameStore.Core.Interfaces
 {
     public interface IGameRepository : IRepository<Game>
     {
+        Task<IReadOnlyCollection<Game>> GetPublisherGamesAsync(int publisherId);
     }
 }

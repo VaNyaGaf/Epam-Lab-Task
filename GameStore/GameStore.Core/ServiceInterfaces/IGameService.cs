@@ -6,5 +6,6 @@ namespace GameStore.Core.ServiceInterfaces
 {
     public interface IGameService : ICrudService<Game>
     {
+        Task<IReadOnlyCollection<Game>> GetPublisherGamesAsync(int publisherId);
     }
 }
