@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using GameStore.Core.Entities;
 using GameStore.Core.ServiceInterfaces;
 using GameStore.PL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace GameStore.PL.Controllers
 {
@@ -19,20 +19,14 @@ namespace GameStore.PL.Controllers
 
         public GenreController(IGenreService genreService, IMapper mapper, ILogger<GenreController> logger)
         {
-            _genreService = genreService ?? throw new ApplicationException("Genre Service isn't injected!");
-            _mapper = mapper ?? throw new ApplicationException("AutoMapper isn't injected");
-            _logger = logger ?? throw new ApplicationException("Logger isn't injected");
+            _genreService = genreService;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateGenre(CreateGameViewModel genreViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model state is not valid");
-                throw new ApplicationException("Model state is not valid");
-            }
-
             var genre = _mapper.Map<Genre>(genreViewModel);
             return Ok(await _genreService.CreateAsync(genre));
         }
@@ -40,12 +34,6 @@ namespace GameStore.PL.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateGenre(EditGenreModel genre)
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model state is not valid");
-                throw new ApplicationException("Model state is not valid");
-            }
-
             var editedGenre = _mapper.Map<Genre>(genre);
             return Ok(await _genreService.UpdateAsync(editedGenre));
         }
@@ -67,6 +55,13 @@ namespace GameStore.PL.Controllers
         {
             await _genreService.DeleteAsync(id);
             return Ok();
+        }
+
+        [HttpGet("Games/{gameId}/Genres")]
+        public async Task<IActionResult> GetGameGenres(int gameId)
+        {
+            var res = await _genreService.GetGameGenresAsync(gameId);
+            return Ok(res);
         }
     }
 }

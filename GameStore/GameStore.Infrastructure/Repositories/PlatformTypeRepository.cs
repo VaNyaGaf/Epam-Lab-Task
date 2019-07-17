@@ -3,9 +3,11 @@ using GameStore.Core.Interfaces;
 
 namespace GameStore.Infrastructure.Repositories
 {
-    class PlatformTypeRepository : GenericRepository<PlatformType>, IPlatformTypeRepository
+    internal class PlatformTypeRepository : GenericRepository<PlatformType>, IPlatformTypeRepository
     {
-        public PlatformTypeRepository(GameStoreContext context) : base(context)
-        { }
+        public PlatformTypeRepository(GameStoreContext context) 
+            : base(context)
+        {
+        }
     }
 }

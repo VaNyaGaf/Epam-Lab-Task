@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GameStore.Infrastructure.ModelsFluentApi
 {
-    class GameGenresConfigs : IEntityTypeConfiguration<GameGenres>
+    internal class GameGenresConfigs : IEntityTypeConfiguration<GameGenres>
     {
         public void Configure(EntityTypeBuilder<GameGenres> builder)
         {

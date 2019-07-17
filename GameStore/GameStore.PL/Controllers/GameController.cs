@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using GameStore.Core.Entities;
 using GameStore.Core.ServiceInterfaces;
+using GameStore.PL.Pagination;
 using GameStore.PL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace GameStore.PL.Controllers
 {
@@ -19,20 +20,14 @@ namespace GameStore.PL.Controllers
 
         public GameController(IGameService gameService, IMapper mapper, ILogger<GameController> logger)
         {
-            _gameService = gameService ?? throw new ApplicationException("Game Service isn't injected!");
-            _mapper = mapper ?? throw new ApplicationException("AutoMapper isn't injected");
-            _logger = logger ?? throw new ApplicationException("Logger isn't injected");
+            _gameService = gameService;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateGame(CreateGameViewModel gameViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model state is not valid");
-                throw new ApplicationException("Model state is not valid");
-            }
-
             var game = _mapper.Map<Game>(gameViewModel);
             return Ok(await _gameService.CreateAsync(game));
         }
@@ -40,12 +35,6 @@ namespace GameStore.PL.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateGame(EditGameModel game)
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model state is not valid");
-                throw new ApplicationException("Model state is not valid");
-            }
-
             var editedGame = _mapper.Map<Game>(game);
             return Ok(await _gameService.UpdateAsync(editedGame));
         }
@@ -62,11 +51,24 @@ namespace GameStore.PL.Controllers
             return Ok(await _gameService.GetAllAsync());
         }
 
+        [HttpGet("Pages")]
+        public async Task<IActionResult> GetPageOfGames(int pageSize, int pageNumber)
+        {
+            Paginator<Game> paginator = new Paginator<Game>(_gameService, pageSize);
+            return Ok(new { page = await paginator.GetPageAsync(pageNumber) });
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _gameService.DeleteAsync(id);
             return Ok();
+        }
+
+        [HttpGet("Publishers/{publisherId}/Games")]
+        public async Task<IActionResult> GetPublisherGames(int publisherId)
+        {
+            return Ok(await _gameService.GetPublisherGamesAsync(publisherId));
         }
     }
 }

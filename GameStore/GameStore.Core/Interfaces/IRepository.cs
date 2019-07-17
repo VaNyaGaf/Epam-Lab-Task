@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 
 namespace GameStore.Core.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> 
+        where TEntity : class
     {
         Task<IReadOnlyCollection<TEntity>> GetAllAsync();
+
         Task<TEntity> GetByIdAsync(int id);
 
         Task<TEntity> AddAsync(TEntity entity);
@@ -13,6 +15,11 @@ namespace GameStore.Core.Interfaces
         Task<TEntity> UpdateAsync(TEntity entity);
 
         Task DeleteAsync(int id);
+
         Task DeleteAsync(TEntity entity);
+
+        Task<IReadOnlyCollection<TEntity>> GetItemsAsync(int skip, int amount);
+
+        Task<int> CountAsync();
     }
 }

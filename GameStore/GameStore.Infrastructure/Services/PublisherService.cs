@@ -8,7 +8,8 @@ namespace GameStore.Infrastructure.Services
     {
         private readonly IPublisherRepository _publisherRepository;
 
-        public PublisherService(IPublisherRepository publisherRepository) : base(publisherRepository)
+        public PublisherService(IPublisherRepository publisherRepository) 
+            : base(publisherRepository)
         {
             _publisherRepository = publisherRepository;
         }
