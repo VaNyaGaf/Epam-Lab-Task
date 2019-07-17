@@ -13,7 +13,6 @@ namespace GameStore.PL.Pagination
 
         int CurrentPage { get; }
 
-        // int PageSize { get; }
-        IEnumerable<TItem> Items { get; }
+        int PageSize { get; }
     }
 }

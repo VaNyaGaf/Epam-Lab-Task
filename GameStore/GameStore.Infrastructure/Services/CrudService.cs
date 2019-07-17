@@ -5,7 +5,7 @@ using GameStore.Core.ServiceInterfaces;
 
 namespace GameStore.Infrastructure.Services
 {
-    public class CrudService<TEntity> : ICrudService<TEntity> 
+    public class CrudService<TEntity> : ICrudService<TEntity>
         where TEntity : class
     {
         private readonly IRepository<TEntity> _repository;
@@ -38,6 +38,16 @@ namespace GameStore.Infrastructure.Services
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             return await _repository.UpdateAsync(entity);
+        }
+
+        public async Task<IReadOnlyCollection<TEntity>> GetItemsAsync(int skip, int amount)
+        {
+            return await _repository.GetItemsAsync(skip, amount);
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _repository.CountAsync();
         }
     }
 }

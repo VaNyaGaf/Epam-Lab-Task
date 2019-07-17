@@ -14,12 +14,5 @@ namespace GameStore.PL.Pagination
         }
 
         public IEnumerable<TItem> Items { get; private set; }
-
-        public object GetUrls()
-        {
-            return new
-            {
-            };
-        }
     }
 }

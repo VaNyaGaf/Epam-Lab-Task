@@ -6,6 +6,5 @@ namespace GameStore.Core.Interfaces
 {
     public interface IGameRepository : IRepository<Game>
     {
-        Task<IReadOnlyCollection<Game>> GetGamesAsync(int skip, int amount);
     }
 }

@@ -17,5 +17,9 @@ namespace GameStore.Core.Interfaces
         Task DeleteAsync(int id);
 
         Task DeleteAsync(TEntity entity);
+
+        Task<IReadOnlyCollection<TEntity>> GetItemsAsync(int skip, int amount);
+
+        Task<int> CountAsync();
     }
 }

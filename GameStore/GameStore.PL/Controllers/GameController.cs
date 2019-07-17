@@ -54,11 +54,8 @@ namespace GameStore.PL.Controllers
         [HttpGet("Pages")]
         public async Task<IActionResult> GetPageOfGames(int pageSize, int pageNumber)
         {
-            int skip = (pageNumber - 1) * pageSize;
-            int lastPage = GetLastPage((await _gameService.GetAllAsync()).Count, pageSize);
-            var games = await _gameService.GetGamesAsync(skip, pageSize);
-            Paginator<Game> paginator = new Paginator<Game>(games, pageSize, pageNumber, lastPage);
-            return Ok(new { page = paginator.GetPage() });
+            Paginator<Game> paginator = new Paginator<Game>(_gameService, pageSize);
+            return Ok(new { page = await paginator.GetPageAsync(pageNumber) });
         }
 
         [HttpDelete("{id}")]
@@ -66,11 +63,6 @@ namespace GameStore.PL.Controllers
         {
             await _gameService.DeleteAsync(id);
             return Ok();
-        }
-
-        private int GetLastPage(int totalItem, int pageSize)
-        {
-            return (int)Math.Ceiling((decimal)totalItem / pageSize);
         }
     }
 }

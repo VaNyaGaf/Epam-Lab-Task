@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameStore.Core.Entities;
 using GameStore.Core.Interfaces;
@@ -21,10 +22,10 @@ namespace GameStore.Infrastructure.Services
         /// </summary>
         /// <param name="skip">Amount of games which be skipped</param>
         /// <param name="amount">Amount of games which be retrieved</param>
-        /// <exception cref="ArgumentException">If  </exception>
+        /// <exception cref="ArgumentException">Thrown when skip parameter less than zero or amount less than one.</exception>
         public async Task<IReadOnlyCollection<Game>> GetGamesAsync(int skip, int amount)
         {
-            return await _gameRepository.GetGamesAsync(skip, amount);
+            return await _gameRepository.GetItemsAsync(skip, amount);
         }
     }
 }
